@@ -13,3 +13,6 @@
 [submodule "cryptofuzz/cryptofuzz"]
 	path = cryptofuzz/cryptofuzz
 	url = https://github.com/guidovranken/cryptofuzz.git
+[submodule "tlspuffin/tlspuffin"]
+	path = tlspuffin/tlspuffin
+	url = https://github.com/tlspuffin/tlspuffin.git

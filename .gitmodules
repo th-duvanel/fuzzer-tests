@@ -1,0 +1,15 @@
+[submodule "tls-attacker/TLS-Attacker"]
+	path = tls-attacker/TLS-Attacker
+	url = https://github.com/tls-attacker/TLS-Attacker.git
+[submodule "tlsfuzzer/tlsfuzzer"]
+	path = tlsfuzzer/tlsfuzzer
+	url = https://github.com/tlsfuzzer/tlsfuzzer.git
+[submodule "tlsbunny/tlsbunny"]
+	path = tlsbunny/tlsbunny
+	url = https://github.com/artem-smotrakov/tlsbunny.git
+[submodule "tlsdiff/tls-diff-testing"]
+	path = tlsdiff/tls-diff-testing
+	url = https://github.com/hso-esk/tls-diff-testing.git
+[submodule "cryptofuzz/cryptofuzz"]
+	path = cryptofuzz/cryptofuzz
+	url = https://github.com/guidovranken/cryptofuzz.git

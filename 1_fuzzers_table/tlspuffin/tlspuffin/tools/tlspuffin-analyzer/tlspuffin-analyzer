@@ -1,0 +1,69 @@
+#!/bin/env python
+import argparse
+
+from matplotlib.pyplot import close
+
+from tlspuffin_analyzer import *
+
+PATH = "/local-homes/lhirschi/tlspuffin"
+HOST = "pesto-calc.loria.fr"
+USER = "lhirschi"
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Plots statistics')
+    parser.add_argument('stats', type=str,
+                        help='Path to stats file')
+    parser.add_argument('--worker_id', type=int,
+                        default=None,
+                        help='Filter log entries from this worker id (deprecated, before was set to 0) but it seems that libAFL changed its logs.')
+    parser.add_argument('--save', type=str,
+                        help='Save the output as a PDF at the given path.')
+    parser.add_argument('--fewer', dest='fewer', action='store_true',
+                        help='Only displays most important tables.')
+    args = parser.parse_args()
+
+    stats_path = args.stats
+    print("Loading file \"%s\"." % stats_path)
+    stats = load_json_slurpy(stats_path, args.worker_id)
+
+    if not stats:
+        print("Stats are empty.")
+        exit(0)
+
+    # keys_stats = get_keys(stats)
+    # print("Available keys (stats): %s" % keys_stats)
+
+    start_date = get_start_date(stats)
+    client_stats = [stat for stat in stats if stat["type"] == "client"]
+    global_stats = [stat for stat in stats if stat["type"] == "global"]
+    stats = None
+
+    print("Files loaded.")
+
+    for client_stat in group_by_id(client_stats):
+        client_stat = list(client_stat)
+        client_id = client_stat[0]["id"]
+        print("Plotting group=\"%s\"" % client_id)
+        try:
+            fig = plot_stats(start_date, client_stat, global_stats, fewer=args.fewer)
+            fig.tight_layout()
+
+            if args.save:
+                save_name = f"{args.save}_{client_id}"
+                # print(fig.canvas.get_supported_filetypes())
+                # fig.savefig(args.save, transparent=False, dpi=200, bbox_inches="tight")
+                print("Saving files %s and %s..." % (save_name + ".svg", save_name + ".pdf"))
+                fig.savefig(save_name + ".svg", format="svg", dpi=400, transparent=False, bbox_inches="tight")
+                # fig.savefig(save_name + ".pdf", format="pdf", dpi=400, transparent=False, bbox_inches="tight")
+                close(fig)
+            else:
+                print("Displaying the plot...")
+                plt.show()
+
+        except Exception as e:
+            print(f"Failed to parse stats for client {client_id}")
+            print(e)
+
+
+main()

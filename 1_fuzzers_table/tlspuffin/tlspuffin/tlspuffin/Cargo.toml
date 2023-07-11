@@ -1,0 +1,264 @@
+[package]
+name = "tlspuffin"
+version = "0.1.0"
+authors = ["Maximilian Ammann <max@maxammann.org>"]
+edition = "2021"
+
+[features]
+default = ["sancov_libafl", "introspection"]
+
+openssl-default = [
+    "tls12",
+    "tls13",
+    "tls12-session-resumption",
+    "tls13-session-resumption",
+    "openssl-binding",
+]
+
+openssl111 = [
+    "openssl-src",
+    "openssl-src/openssl111k",
+    # Unused, 111 is default: "openssl-src/openssl111",
+    "openssl-src/no-rand",
+    "tls12",
+    "tls13",
+    "tls12-session-resumption",
+    "tls13-session-resumption",
+    "deterministic",
+    "claims",
+    "openssl111-binding",
+    "transcript-extraction",
+    "client-authentication-transcript-extraction",
+]
+openssl111j = [
+    "openssl-src",
+    "openssl-src/openssl111j",
+    # Unused, 111 is default: "openssl-src/openssl111",
+    "openssl-src/no-rand",
+    "tls12",
+    "tls13",
+    "tls12-session-resumption",
+    "tls13-session-resumption",
+    "deterministic",
+    "claims",
+    "openssl111-binding",
+    "transcript-extraction",
+    "client-authentication-transcript-extraction",
+]
+openssl111u = [
+    "openssl-src",
+    "openssl-src/openssl111u",
+    # Unused, 111 is default: "openssl-src/openssl111",
+    "openssl-src/no-rand",
+    "tls12",
+    "tls13",
+    "tls12-session-resumption",
+    "tls13-session-resumption",
+    "deterministic",
+    "claims",
+    "openssl111-binding",
+    "transcript-extraction",
+    "client-authentication-transcript-extraction",
+]
+openssl101f = [
+    "openssl-src",
+    "openssl-src/openssl101f",
+    "openssl-src/weak-crypto", # We want to allow weak-crypto for FREAK
+    "tls12",
+    "openssl101-binding",
+    "tls12-session-resumption",
+]
+openssl102u = [
+    "openssl-src",
+    "openssl-src/openssl102u",
+    "openssl-src/weak-crypto", # We want to allow weak-crypto for FREAK
+    "tls12",
+    "openssl102-binding",
+    "tls12-session-resumption"
+]
+
+# Some LibreSSL version
+libressl = [
+    "openssl-src/libressl333",
+    "tls12",
+    "tls13",
+    "tls12-session-resumption",
+    "claims",
+    "openssl-binding",
+    "transcript-extraction",
+]
+
+wolfssl430 = [
+    "wolfssl-sys/vendored-wolfssl430",
+    "wolfssl/wolfssl430",
+    "tls12",
+    "tls13",
+    "wolfssl-binding",
+    "transcript-extraction",
+    # Does not support any kind of resumption right now: https://github.com/trailofbits/tlspuffin/issues/12
+    # FIXME: support "claims", "deterministic"
+]
+
+wolfssl510 = [
+    "wolfssl-sys/vendored-wolfssl510",
+    "tls12",
+    "tls13",
+    "wolfssl-binding",
+    "tls12-session-resumption",
+    "tls13-session-resumption",
+    "transcript-extraction",
+    "client-authentication-transcript-extraction"
+    # FIXME: support "claims", "deterministic"
+]
+
+wolfssl520 = [
+    "wolfssl-sys/vendored-wolfssl520",
+    "tls12",
+    "tls13",
+    "wolfssl-binding",
+    "tls12-session-resumption",
+    "tls13-session-resumption",
+    "transcript-extraction",
+    "client-authentication-transcript-extraction"
+    # FIXME: support "claims", "deterministic"
+]
+
+wolfssl530 = [
+    "wolfssl-sys/vendored-wolfssl530",
+    "tls12",
+    "tls13",
+    "wolfssl-binding",
+    "tls12-session-resumption",
+    "tls13-session-resumption",
+    "transcript-extraction",
+    "client-authentication-transcript-extraction"
+    # FIXME: support "claims", "deterministic"
+]
+
+wolfssl540 = [
+    "wolfssl-sys/vendored-wolfssl540",
+    "tls12",
+    "tls13",
+    "wolfssl-binding",
+    "tls12-session-resumption",
+    "tls13-session-resumption",
+    "transcript-extraction",
+    "client-authentication-transcript-extraction"
+    # FIXME: support "claims", "deterministic"
+]
+
+fix-CVE-2022-25638 = ["wolfssl-sys?/fix-CVE-2022-25638"]
+fix-CVE-2022-25640 = ["wolfssl-sys?/fix-CVE-2022-25640"]
+fix-CVE-2022-39173 = ["wolfssl-sys?/fix-CVE-2022-39173"]
+fix-CVE-2022-42905 = ["wolfssl-sys?/fix-CVE-2022-42905"]
+wolfssl-disable-postauth = ["wolfssl-sys?/wolfssl-disable-postauth"]
+
+wolfsslmaster = [
+    "wolfssl-sys/vendored-master",
+    "tls12",
+    "tls13",
+    "wolfssl-binding",
+    "tls12-session-resumption",
+    "tls13-session-resumption",
+    "transcript-extraction",
+    "client-authentication-transcript-extraction"
+    # FIXME: support "claims", "deterministic"
+]
+
+
+# Logs each execution of __sanitizer_cov_trace_pc_guard*
+sancov_pcguard_log = ["puffin/sancov_pcguard_log"]
+# Uses libafl for the instrumentation. sancov_pcguard_log and sancov_libafl are mutally exclusive
+sancov_libafl = ["puffin/sancov_libafl", "openssl-src?/sancov", "wolfssl-sys?/sancov"]
+
+# Enables ASAN
+asan = ["openssl-src?/asan", "wolfssl-sys?/asan"]
+
+gcov_analysis = ["openssl-src?/gcov_analysis", "wolfssl-sys?/gcov_analysis"]
+llvm_cov_analysis = ["openssl-src?/llvm_cov_analysis", "wolfssl-sys?/llvm_cov_analysis"]
+
+# WolfSSL bindings are used
+wolfssl-binding = ["wolfssl", "wolfssl-sys", "foreign-types"]
+# OpenSSL bindings are used
+openssl-binding = ["openssl", "openssl-sys", "foreign-types-openssl"]
+# Openssl 1.0.1 bindings
+openssl101-binding = ["openssl-binding"]
+# Openssl 1.0.2 bindings
+openssl102-binding = ["openssl-binding"]
+# Openssl 1.1.1 bindings
+openssl111-binding = ["openssl-binding"]
+
+# PUT supports TLS 1.3
+tls13 = []
+# PUT supports TLS 1.2
+tls12 = []
+# PUT supports session resumption through Tickets and PSK
+tls13-session-resumption = []
+# PUT supports session resumption through RFC5077
+tls12-session-resumption = []
+# PUT is determinisitic
+deterministic = []
+# Require the PUT to implement the claim-interface.h
+claims = ["puffin/claims"]
+# Whether transcript extraction is supported. This is needed for simplified traces.
+transcript-extraction = []
+# PUT exposes the required transcripts which are required for client authentication
+client-authentication-transcript-extraction = []
+
+introspection = ["puffin/introspection"]
+
+[dependencies]
+
+puffin = { path = "../puffin" }
+
+log = "0.4.17"
+itertools = "0.10.3"
+smallvec = "1.8.1"
+libc = { version = "0.2.126" }
+cfg-if = "1.0.0"
+hex = "0.4.3"
+serde = { version = "1.0.137", features = ["derive"] }
+
+ring = { version = "0.16.20", features = ["std"] }
+webpki = { version = "0.22.0", features = ["alloc", "std"] }
+sct = "0.7.0"
+
+
+
+# OpenSSL
+
+# Up to verison 111
+openssl = { version = "0.10.41", features = ["vendored"], optional = true }
+openssl-sys = { version = "*", features = ["vendored"], optional = true }
+
+# For openssl 305
+#openssl = { git = "https://github.com/tlspuffin/rust-openssl.git", branch = "fuzz-305", features = ["vendored"], optional = true }
+#openssl-sys = { git = "https://github.com/tlspuffin/rust-openssl.git", branch = "fuzz-305", features = ["vendored"], optional = true }
+
+foreign-types-openssl = { version = "0.3.1", package = "foreign-types", optional = true }
+security-claims = { version = "0.1.0", optional = false }
+
+# WolfSSL
+wolfssl = { path = "../crates/wolfssl", optional = true }
+wolfssl-sys = { path = "../crates/wolfssl-sys", features = [], optional = true }
+foreign-types = { version = "0.5.0", optional = true }
+
+[build-dependencies]
+# It is essential that this dependency is listed as build-dependencies! Because it is one. Else features get resolved wrong.
+openssl-src = { version = "*", features = [], optional = true }
+
+[dev-dependencies]
+test-log = "0.2.10"
+env_logger = "0.9.0"
+nix = "0.25.0"
+serde_json = "1.0.81"
+tempfile = "3.3.0"
+criterion = "0.3.5"
+
+[[bench]]
+name = "benchmark"
+harness = false
+
+[[bin]]
+name = "tlspuffin"
+path = "src/main.rs"

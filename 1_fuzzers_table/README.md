@@ -39,11 +39,11 @@ Made in a virtual machine for Windows. Great for not sharing any resources.
  `++:.                           `-/+/
  .`                                 `/
 ```
+```
 LENOVO IDEAPAD GAMING 3
 AMD RYZEN 7 5800H
 16 GB DDR4 2866 MhZ
 NVIDIA GEFORCE RTX 3060
-
 ```
 
 ## Authors

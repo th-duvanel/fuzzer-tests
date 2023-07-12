@@ -13,6 +13,13 @@ time_results=()      # Time array.
 cpu_results=()       # CPU uses array.
 ram_results=()       # RAM uses array.
 
+
+if [[ ! -d tshark ]]
+then
+  mkdir tshark
+fi
+
+
 for ((i=0; i<iterations; i++))
 do
     cpu_use=()
@@ -23,6 +30,10 @@ do
     pid=$!              # Gets fuzzer process id.
 
     ini_time=$(date +%s)
+
+    eval "tshark -i lo -d tcp.port==4433,tls -P -V -w ./tshark/$i.pcapng -F pcapng"
+
+    tshark_pid=$!
 
     # While process is alive.
     while kill -0 $pid 2>/dev/null
@@ -37,6 +48,9 @@ do
       ram_uses+=$((ram * total_ram))    # MiB usage of RAM.
 
     done
+
+    # Finished Capture
+    eval "kill -9 $tshark_pid"
 
 
     ##########################TIME##################################

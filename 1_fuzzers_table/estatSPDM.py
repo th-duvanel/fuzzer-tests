@@ -1,6 +1,6 @@
 import numpy as np
 import scipy.stats
-import matplotlib.pyplot as plt
+from tabulate import tabulate
 
 # Função para ler os dados de um conjunto (CPUs ou memórias RAM)
 def ler_dados():
@@ -48,12 +48,5 @@ dados = [
     ["Memórias RAM", std_rams, conf_interval_rams]
 ]
 
-fig, ax = plt.subplots(figsize=(8, 4)) 
-ax.axis('off')
-table = ax.table(cellText=dados, colLabels=None, cellLoc='center', loc='center')
-table.auto_set_font_size(False)
-table.set_fontsize(10)  
-table.scale(1.3, 1.5)  
-
-plt.savefig('tabela.png', bbox_inches='tight')
-plt.show()
+tabela = tabulate(dados, headers="firstrow", tablefmt="fancy_grid")
+print(tabela)

@@ -4,7 +4,7 @@ Git repo for development of a SPDM fuzzer using a TLS pre-existing one.
 
 ## About
 
-This repo has two parts: the pre testing for already existing fuzzers for TLS, with the aim of finding the highest perfomance and easiest to adapt one.
+This repo has two parts: the pre testing for already existing fuzzers for TLS, with the aim of finding the highest perfomance one.
 The second part is the fuzzer development itself.
 
 ### Requisites

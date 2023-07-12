@@ -26,7 +26,7 @@ Vai ter alguma coisa aqui =)
 ## Authors
 
 * **Thiago Duvanel Ferreira** - [Linkedin](https://www.linkedin.com/in/thiago-duvanel-ferreira-142028244/) - [GitHub](https://github.com/th-duvanel)
-* **Filipe Tressmann Velozo **
+* **Filipe Tressmann Velozo**
 * **Eduardo Figueredo Pacheco**
 
 

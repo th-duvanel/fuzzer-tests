@@ -795,6 +795,63 @@ void Builtin_tests_importer::Run(void) {
         write(CF_OPERATION("BLS_IsG1OnCurve"), dsOut2);
     }
 
+    {
+        /* Constantine modular exponentiation crash */
+        /* https://github.com/mratsim/constantine/pull/251 */
+
+        nlohmann::json parameters;
+
+        parameters["modifier"] = "";
+        parameters["calcOp"] = CF_CALCOP("ExpMod(A,B,C)");
+        parameters["bn1"] = "174050332293622031404857552280219410364023488927386650641";
+        parameters["bn2"] = "6612720053854191978412609357563545875491153188501906352980899759345275170452624446196";
+        parameters["bn3"] = "75943471580235788919365009217869974981188866964726753486351395808039716718239878128412997724308541139386707755089002519127084628967424";
+        parameters["bn4"] = "";
+
+        fuzzing::datasource::Datasource dsOut2(nullptr, 0);
+        cryptofuzz::operation::BignumCalc op(parameters);
+        op.Serialize(dsOut2);
+        write(CF_OPERATION("BignumCalc"), dsOut2);
+    }
+
+    {
+        /* libtommath mp_exptmod incorrect result (64 bit) */
+        /* https://github.com/libtom/libtommath/issues/563 */
+
+        nlohmann::json parameters;
+
+        parameters["modifier"] = "";
+        parameters["calcOp"] = CF_CALCOP("ExpMod(A,B,C)");
+        parameters["bn1"] = "24";
+        parameters["bn2"] = "9223372036854775808";
+        parameters["bn3"] = "75556710804409716572160";
+        parameters["bn4"] = "";
+
+        fuzzing::datasource::Datasource dsOut2(nullptr, 0);
+        cryptofuzz::operation::BignumCalc op(parameters);
+        op.Serialize(dsOut2);
+        write(CF_OPERATION("BignumCalc"), dsOut2);
+    }
+
+    {
+        /* libtommath mp_exptmod incorrect result (32 bit) */
+        /* https://github.com/libtom/libtommath/issues/563 */
+
+        nlohmann::json parameters;
+
+        parameters["modifier"] = "";
+        parameters["calcOp"] = CF_CALCOP("ExpMod(A,B,C)");
+        parameters["bn1"] = "67927325822352824469517479013";
+        parameters["bn2"] = "2147483648";
+        parameters["bn3"] = "1879048192";
+        parameters["bn4"] = "";
+
+        fuzzing::datasource::Datasource dsOut2(nullptr, 0);
+        cryptofuzz::operation::BignumCalc op(parameters);
+        op.Serialize(dsOut2);
+        write(CF_OPERATION("BignumCalc"), dsOut2);
+    }
+
     ecdsa_verify_tests();
     ecc_point_add_tests();
 }

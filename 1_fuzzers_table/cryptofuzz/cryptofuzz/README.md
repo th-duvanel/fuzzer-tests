@@ -197,3 +197,5 @@ For instructions on how to run Cryptofuzz, please see [`docs/running.md`](docs/r
 - Constantine: [Modular exponentiation incorrect result with power-of-2 modulus](https://github.com/mratsim/constantine/pull/247)
 - Constantine: [Slow repeated modular exponentiation](https://github.com/mratsim/constantine/pull/249)
 - Constantine: [BLS12-381 HashToCurve G1 incorrect result](https://github.com/mratsim/constantine/pull/250)
+- Constantine: [Modular exponentiation crash](https://github.com/mratsim/constantine/pull/251)
+- libtommath: [mp_exptmod incorrect result](https://github.com/libtom/libtommath/issues/563)

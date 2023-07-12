@@ -42,10 +42,10 @@ t_student_rams = round(t_student_rams, 2)
 
 # Tabela
 dados = [
-    ["", "Desvio Padrão", "Intervalo de Confiança", "T-Student"],
-    ["Tempo", std_tmp, conf_interval_tmp, t_student_tmp],
-    ["CPUs", std_cpus, conf_interval_cpus, t_student_cpus],
-    ["Memórias RAM", std_rams, conf_interval_rams, t_student_rams]
+    ["", "Desvio Padrão", "Intervalo de Confiança"],
+    ["Tempo", std_tmp, conf_interval_tmp],
+    ["CPUs", std_cpus, conf_interval_cpus],
+    ["Memórias RAM", std_rams, conf_interval_rams]
 ]
 
 fig, ax = plt.subplots(figsize=(8, 4)) 

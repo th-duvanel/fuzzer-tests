@@ -76,13 +76,12 @@ do
 
 done
 
-sum=0
-for time in "${time_results[@]}"
-do
-  sum=$(echo "$sum + $tine" | bc -l)
-done
-avg_time=$(echo "scale=4; $sum / ${#time_results[@]}" | bc -l)
 
+# Time for each iteraction
+for print in "${time_results[@]}"
+do
+  echo "$print "
+done
 
 # CPU results print for python script.
 for print in "${cpu_results[@]}"
@@ -96,7 +95,6 @@ do
   echo "$print "
 done
 
-echo "Average total duration of fuzzer: $avg_time"
 
 
 exit 0

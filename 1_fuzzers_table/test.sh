@@ -27,12 +27,6 @@ echo "[ IT'S SUPPOSED TO EXIST AN ERROR THAT IS IMPOSSIBLE TO FIND FUZZER'S OWN 
 
 sleep 5
 
-cd cryptofuzz
-chmod +x ./compile.sh
-./compile.sh
-echo "[ IT'S SUPPOSED TO EXIST AND ERROR THAT THE OWN CLANG CAN'T COMPILE THE STD++17 LIB. ]"
-cd ..
-
 sleep 5
 
 exit 0

@@ -13,7 +13,7 @@ cd tlsfuzzer
 chmod +x ./compile.sh
 ./compile.sh
 cd ..
-./delivery.sh 30 "tlsfuzzer" "PYTHONPATH=. python3 scripts/test-tls13-finished-plaintext.py" "tlsfuzzer"
+./delivery.sh 30 "tlsfuzzer" "PYTHONPATH=. python3 scripts/test-tls13-finished-plaintext.py -d" "tlsfuzzer"
 
 sleep 5
 

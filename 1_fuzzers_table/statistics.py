@@ -12,15 +12,19 @@ tempo = ler_dados()
 cpus = ler_dados()
 rams = ler_dados()
 
+mean_tmp = np.mean(tempo)
+mean_cpus = np.mean(cpus)
+mean_rams = np.mean(rams)
+
 # Desvio padrão
 std_tmp = np.std(tempo)
 std_cpus = np.std(cpus)
 std_rams = np.std(rams)
 
 # Intervalo de confiança (95% de confiança)
-conf_interval_tmp = scipy.stats.t.interval(0.95, len(tempo) - 1, loc=np.mean(tempo), scale=std_tmp)
-conf_interval_cpus = scipy.stats.t.interval(0.95, len(cpus) - 1, loc=np.mean(cpus), scale=std_cpus)
-conf_interval_rams = scipy.stats.t.interval(0.95, len(rams) - 1, loc=np.mean(rams), scale=std_rams)
+conf_interval_tmp = scipy.stats.t.interval(0.95, len(tempo) - 1, loc=mean_tmp, scale=std_tmp)
+conf_interval_cpus = scipy.stats.t.interval(0.95, len(cpus) - 1, loc=mean_cpus, scale=std_cpus)
+conf_interval_rams = scipy.stats.t.interval(0.95, len(rams) - 1, loc=mean_rams, scale=std_rams)
 
 # Teste t-Student
 t_student_tmp, _ = scipy.stats.ttest_ind(tempo, np.zeros(len(tempo)))
@@ -42,10 +46,10 @@ t_student_rams = round(t_student_rams, 2)
 
 # Tabela
 dados = [
-    ["", "Desvio Padrão", "Intervalo de Confiança"],
-    ["Tempo", std_tmp, conf_interval_tmp],
-    ["CPUs", std_cpus, conf_interval_cpus],
-    ["Memórias RAM", std_rams, conf_interval_rams]
+    ["", "Média","Desvio Padrão", "Intervalo de Confiança"],
+    ["Tempo",mean_tmp, std_tmp, conf_interval_tmp],
+    ["CPUs",mean_cpus, std_cpus, conf_interval_cpus],
+    ["Memórias RAM",mean_rams, std_rams, conf_interval_rams]
 ]
 
 tabela = tabulate(dados, headers="firstrow", tablefmt="fancy_grid")

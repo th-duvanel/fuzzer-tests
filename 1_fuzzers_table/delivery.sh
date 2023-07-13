@@ -1,25 +1,27 @@
 #!/bin/bash
 
 if [[ $# -lt 3 ]]; then
-    echo "Use ./test.sh <num of iterations> "<path to the desired fuzzer>" "<command to start the desired fuzzer>""
+    echo "Use ./test.sh <num of iterations> <path to the desired fuzzer> <command to start the desired fuzzer>"
     exit 1
 fi
 
 iterations=$1
 
+echo $(top -bn 1 | grep "MiB Mem" | awk '{print $4}')
 total_ram=$(top -bn 1 | grep "MiB Mem" | awk '{print $4}')
+
 
 time_results=()      # Time array.
 cpu_results=()       # CPU uses array.
 ram_results=()       # RAM uses array.
 
-eval "cd $2"
-
+cd $2
 
 if [[ ! -d tshark ]]
 then
   mkdir tshark
 fi
+
 
 
 for ((i=0; i<iterations; i++))
@@ -31,9 +33,9 @@ do
 
     pid=$!              # Gets fuzzer process id.
 
-    ini_time=$(date +%s)
+    ini_time=$(date +%s)  # PROBLEMA
 
-    eval "tshark -i lo -d tcp.port==4433,tls -P -V -w ./tshark/$i.pcapng -F pcapng &"
+    tshark -i lo -d tcp.port==4433,tls -P -V -w ./tshark/$i.pcapng -F pcapng &
 
     tshark_pid=$!
 
@@ -47,12 +49,12 @@ do
 
       cpu_use+=$(awk "BEGIN { print 100 - $cpu }")  # % usage of CPU.
       
-      ram_uses+=$((ram * total_ram))    # MiB usage of RAM.
+      ram_use+=$(echo "(${ram} * ${total_ram})" | bc -l)    # MiB usage of RAM.
 
     done
 
     # Finished Capture
-    eval "kill -9 $tshark_pid"
+    kill -9 $tshark_pid
 
 
     ##########################TIME##################################

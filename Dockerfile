@@ -15,3 +15,5 @@ COPY 1_fuzzers_table /home/1_fuzzers_table
 
 RUN cd home/1_fuzzers_table
 RUN chmod +x *.sh
+
+RUN ./test.sh

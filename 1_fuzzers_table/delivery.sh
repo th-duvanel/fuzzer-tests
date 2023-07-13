@@ -22,10 +22,13 @@ fi
 
 for ((i=0; i<$1; i++))
 do
+    cd $4
 
     eval "$3 &"
 
     pid=$!              # Gets fuzzer process id.
+
+    cd ..
 
     ini_time=$(date +%s)
 

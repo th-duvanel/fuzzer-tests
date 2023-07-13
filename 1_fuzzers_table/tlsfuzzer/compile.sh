@@ -2,9 +2,7 @@
 
 
 pip3 install --pre tlslite-ng
-pip3 install gmpy
-pip3 install m2crypto
-
+pip3 install gmpy2
 
 
 # Precisa m2crypto e gmpy para ter maior velocidade.

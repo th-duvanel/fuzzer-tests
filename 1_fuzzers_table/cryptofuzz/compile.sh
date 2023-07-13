@@ -22,7 +22,7 @@ then
     git clone --depth 1 https://github.com/openssl/openssl.git
     cd openssl/
     ./config enable-md2 enable-rc5
-    make -j$(nproc)
+    make -j$(nproc) 
     export OPENSSL_INCLUDE_PATH=`realpath include/`
     export OPENSSL_LIBCRYPTO_A_PATH=`realpath libcrypto.a`
     export CXXFLAGS="$CXXFLAGS -I $OPENSSL_INCLUDE_PATH"

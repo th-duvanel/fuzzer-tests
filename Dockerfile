@@ -1,19 +1,17 @@
 FROM ubuntu:22.04
 
 # System update
-RUN apt update && apt-get install y --no-install-recommends \
+RUN apt update && apt-get install -y --no-install-recommends \
 git \
-tshark \
 python3-pip \
-bc \
-python-dev
+bc
+
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tshark
 
 RUN pip3 install scipy
 RUN pip3 install tabulate
 
-COPY 1_fuzzers_table /home/1_fuzzers_table
+COPY 1_fuzzers_table /home/fuzzers
 
-RUN cd home/1_fuzzers_table
-RUN chmod +x *.sh
-
-RUN ./test.sh
+RUN chmod +x home/fuzzers/*.sh

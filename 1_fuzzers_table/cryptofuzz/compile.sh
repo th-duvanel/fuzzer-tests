@@ -65,3 +65,7 @@ export LIBFUZZER_LINK="-fsanitize=fuzzer"
 export CXXFLAGS="$CXXFLAGS -ferror-limit=0"
 
 make
+
+cd ..
+
+exit 0

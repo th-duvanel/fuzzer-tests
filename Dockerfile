@@ -6,12 +6,12 @@ git \
 tshark \
 python3-pip \
 bc \
-openjdk-11-jdk \
-maven
+python-dev
 
 RUN pip3 install scipy
 RUN pip3 install tabulate
 
+COPY 1_fuzzers_table /home/1_fuzzers_table
 
-
-COPY 1_fuzzers_table /home/fuzzers
+RUN cd home/1_fuzzers_table
+RUN chmod +x *.sh

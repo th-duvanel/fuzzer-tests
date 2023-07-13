@@ -12,8 +12,7 @@ ram_use=()       # RAM uses array.
 
 cd $2
 
-if [[ ! -d tshark ]]
-then
+if [[ ! -d tshark ]]; then
   mkdir tshark
 fi
 
@@ -21,17 +20,18 @@ fi
 for ((i=0; i<$1; i++))
 do
 
-    tshark -i lo -f "tcp port 4433" -P -V -w ./tshark/$i.pcapng -F pcapng &
-
-    tshark_pid=$!
-
     eval "$3 &"
 
     pid=$!              # Gets fuzzer process id.
 
-    ini_time=$(date +%s)  # PROBLEMA
+    ini_time=$(date +%s)
 
-    flag=false
+    tshark -i lo -f "tcp port 4433" -w ./tshark/$i.pcapng -F pcapng -q &
+
+    tshark_pid=$!
+    disown
+
+    ini_time=$(date +%s)
 
     # While process is alive.
     while kill -0 $pid 2>/dev/null
@@ -43,9 +43,11 @@ do
       cpu=$(top -bn 1 | grep %Cpu\(s\) | cut -d ',' -f 4 | awk '{ gsub("[^0-9.]",""); print }')
 
 
-      cpu_use+=($(awk "BEGIN { print 100 - $cpu }"))  # % usage of CPU.
-      ram_use+=($ram)
-
+      # If the fuzzer is too fast for the cpu reading, it doesn't count the "zero" percent usage.
+      if [[ $cpu != 100.0 ]]; then
+        cpu_use+=($(awk "BEGIN { print 100 - $cpu }"))  # % usage of CPU.
+        ram_use+=($ram)
+      fi
 
     done
 

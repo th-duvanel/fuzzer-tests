@@ -16,6 +16,9 @@ if [[ ! -d tshark ]]; then
   mkdir tshark
 fi
 
+if [[ -f results.txt ]]; then
+  rm results.txt
+fi
 
 for ((i=0; i<$1; i++))
 do
@@ -70,26 +73,30 @@ done
 # Time for each iteraction
 for print in "${time_results[@]}"
 do
-  echo -n "$print "
+  echo -n "$print " >> results.txt
 done
 
-echo
+echo >> results.txt
 
 # CPU results print for python script.
 for print in "${cpu_use[@]}"
 do
-  echo -n "$print "
+  echo -n "$print " >> results.txt
 done
 
-echo
+echo >> results.txt
 
 # RAM results print for python script.
 for print in "${ram_use[@]}"
 do
-  echo -n "$print "
+  echo -n "$print " >> results.txt
 done
 
-echo
+echo >> results.txt
+
+
+cd ..
+eval "python3 statistics.py < $2/results.txt"
 
 
 

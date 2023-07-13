@@ -47,9 +47,9 @@ t_student_rams = round(t_student_rams, 2)
 # Tabela
 dados = [
     ["", "Média","Desvio Padrão", "Intervalo de Confiança"],
-    ["Tempo",mean_tmp, std_tmp, conf_interval_tmp],
-    ["CPUs",mean_cpus, std_cpus, conf_interval_cpus],
-    ["Memórias RAM",mean_rams, std_rams, conf_interval_rams]
+    ["Tempo (s)",mean_tmp, std_tmp, conf_interval_tmp],
+    ["CPUs (%)",mean_cpus, std_cpus, conf_interval_cpus],
+    ["Memórias RAM (MiB)",mean_rams, std_rams, conf_interval_rams]
 ]
 
 tabela = tabulate(dados, headers="firstrow", tablefmt="fancy_grid")

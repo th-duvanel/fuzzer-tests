@@ -77,17 +77,17 @@ class ExpectSPDMEmuResponse(Expect):
             return False
         if transport != b'\x00\x00\x00\x03':
             return False
-        if size != self.size:
+        if size != 0 and size != self.size:
             return False
         return True
 
     def process(self, state, msg):
-        return
+        print("Processing")
 
 class ExpectSPDMEmuErrorResponse(ExpectSPDMEmuResponse):
     def __init__(self):
         super().__init__(b'\x00\x00\x00\x01',
-                         size,  b'')
+                         0,  b'')
         self.errorCode = bytearray([0x10, 0x7f])
 
     def is_match(self, msg):
@@ -97,45 +97,35 @@ class ExpectSPDMEmuErrorResponse(ExpectSPDMEmuResponse):
             return False
 
         return self.check_if_configs_are_valid(command, transport, size)
+    def process(self, state, msg):
+        print("Processing")
 
-def sendToResponder(rootNode, command, bufferSize, message):
+def sendToResponder(node, command, bufferSize, message):
     transport_type = b'\x00\x00\x00\x03'
     size = bufferSize.to_bytes(4, 'big')
-
-    node = rootNode.add_child(RawSocketWriteGenerator(command))
-    node = rootNode.add_child(RawSocketWriteGenerator(transport_type))
-    node = rootNode.add_child(RawSocketWriteGenerator(size))
-    node = rootNode.add_child(RawSocketWriteGenerator(message))
+    print(command)
+    node = node.add_child(RawSocketWriteGenerator(command))
+    node = node.add_child(RawSocketWriteGenerator(transport_type))
+    node = node.add_child(RawSocketWriteGenerator(size))
+    node = node.add_child(RawSocketWriteGenerator(message))
 
     return node
 
-def sendInitialMessage(root_node):
-    return sendToResponder(root_node,
+def sendInitialMessage(node):
+    return sendToResponder(node,
                     b'\x00\x00\xde\xad',
                     14,
                     b'\x43\x6c\x69\x65\x6e\x74\x20\x48\x65\x6c\x6c\x6f\x21\x00')
 
-def sendGetVersion(rootNode, fuzzedMessage):
-    return sendToResponder(rootNode,
+def sendGetVersion(node, fuzzedMessage):
+    msg = bytearray(5)
+    msg[0] = 0x05
+    for i in range(1, 5):
+        msg[i] = fuzzedMessage[i -1]
+    return sendToResponder(node,
                            b'\x00\x00\x00\x01',
                            5,
                            fuzzedMessage)
-
-#Platform port Receive command: 00 00 de ad
-#Platform port Receive transport_type: 00 00 00 01
-#Platform port Receive size: 00 00 00 0e
-#Platform port Receive buffer:
-#    43 6c 69 65 6e 74 20 48 65 6c 6c 6f 21 00
-#Platform port Transmit command: 00 00 de ad
-#Platform port Transmit transport_type: 00 00 00 01
-#Platform port Transmit size: 00 00 00 0e
-#Platform port Transmit buffer:
-#    53 65 72 76 65 72 20 48 65 6c 6c 6f 21 00
-#Platform port Receive command: 00 00 00 01
-#Platform port Receive transport_type: 00 00 00 01
-#Platform port Receive size: 00 00 00 05
-#Platform port Receive buffer:
-#    05 10 84 00 00
 
 # Check if user has passed port number
 if (len(sys.argv) != 2):
@@ -155,8 +145,8 @@ node = sendInitialMessage(node)
 node = node.add_child(ExpectSPDMEmuResponse(b'\x00\x00\xde\xad',
                                             14,
                                             b'\x53\x65\x72\x76\x65\x72\x20\x48\x65\x6c\x6c\x6f\x21\x00'))
-node = sendGetVersion(node)
-node = node.add_child(Expect)
+node = sendGetVersion(node, rightMessage)
+node = node.add_child(ExpectSPDMEmuErrorResponse())
 
 runner = Runner(root_node)
 runner.run()

@@ -12,6 +12,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tshark
 RUN pip3 install scipy
 RUN pip3 install tabulate
 
-COPY 1_fuzzers_table /home/fuzzers
+COPY fuzzers_table /home/fuzzers
+COPY openspdm /home/openspdm
+COPY getVersionFuzzer /home/
 
 RUN chmod +x home/fuzzers/*.sh

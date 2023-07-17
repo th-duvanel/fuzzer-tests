@@ -2,56 +2,80 @@ import numpy as np
 import scipy.stats
 from tabulate import tabulate
 
-# Função para ler os dados de um conjunto (CPUs ou memórias RAM)
+
 def ler_dados():
     entrada = input()
     dados = [float(num) for num in entrada.split()]
     return dados
 
-tempo = ler_dados()
-cpus = ler_dados()
-rams = ler_dados()
+# Dicionário de fuzzers e seus nomes
+fuzzers = {
+    "TLS-ATTACKER": "TLS Attacker",
+    "TLSFUZZER": "TLSFuzzer",
+    "TLSDIFF": "TLSdiff",
 
-mean_tmp = np.mean(tempo)
-mean_cpus = np.mean(cpus)
-mean_rams = np.mean(rams)
+}
 
-# Desvio padrão
-std_tmp = np.std(tempo)
-std_cpus = np.std(cpus)
-std_rams = np.std(rams)
+# Dicionário para armazenar as tabelas
+tabelas_fuzzers = {}
 
-# Intervalo de confiança (95% de confiança)
-conf_interval_tmp = scipy.stats.t.interval(0.95, len(tempo) - 1, loc=mean_tmp, scale=std_tmp)
-conf_interval_cpus = scipy.stats.t.interval(0.95, len(cpus) - 1, loc=mean_cpus, scale=std_cpus)
-conf_interval_rams = scipy.stats.t.interval(0.95, len(rams) - 1, loc=mean_rams, scale=std_rams)
+# Iterar sobre cada fuzzer
+for fuzzer, nome in fuzzers.items():
+    print(f"--- Fuzzer: {nome} ---")
 
-# Teste t-Student
-t_student_tmp, _ = scipy.stats.ttest_ind(tempo, np.zeros(len(tempo)))
-t_student_cpus, _ = scipy.stats.ttest_ind(cpus, np.zeros(len(cpus)))
-t_student_rams, _ = scipy.stats.ttest_ind(rams, np.zeros(len(rams)))
+    # Leitura
+    tempo = ler_dados()
+    cpus = ler_dados()
+    rams = ler_dados()
 
-# Formatando os valores com duas casas decimais
-std_tmp = round(std_tmp, 2)
-std_cpus = round(std_cpus, 2)
-std_rams = round(std_rams, 2)
+    mean_tmp = np.mean(tempo)
+    mean_cpus = np.mean(cpus)
+    mean_rams = np.mean(rams)
 
-conf_interval_tmp = [round(value, 2) for value in conf_interval_tmp]
-conf_interval_cpus = [round(value, 2) for value in conf_interval_cpus]
-conf_interval_rams = [round(value, 2) for value in conf_interval_rams]
+    # Desvio padrão
+    std_tmp = np.std(tempo)
+    std_cpus = np.std(cpus)
+    std_rams = np.std(rams)
 
-t_student_tmp = round(t_student_tmp, 2)
-t_student_cpus = round(t_student_cpus, 2)
-t_student_rams = round(t_student_rams, 2)
+    # Intervalo de confiança (95% de confiança)
+    conf_interval_tmp = scipy.stats.t.interval(0.95, len(tempo) - 1, loc=mean_tmp, scale=std_tmp)
+    conf_interval_cpus = scipy.stats.t.interval(0.95, len(cpus) - 1, loc=mean_cpus, scale=std_cpus)
+    conf_interval_rams = scipy.stats.t.interval(0.95, len(rams) - 1, loc=mean_rams, scale=std_rams)
 
-# Tabela
-dados = [
-    ["", "Média","Desvio Padrão", "Intervalo de Confiança"],
-    ["Tempo (s)",mean_tmp, std_tmp, conf_interval_tmp],
-    ["CPUs (%)",mean_cpus, std_cpus, conf_interval_cpus],
-    ["Memórias RAM (MiB)",mean_rams, std_rams, conf_interval_rams]
+    # Tabela do fuzzer
+    dados = [
+        ["", "Valor", "Média", "Desvio Padrão", "Intervalo de Confiança"],
+        ["Tempo (s)", "Média", mean_tmp, std_tmp, conf_interval_tmp],
+        ["CPUs (%)", "Média", mean_cpus, std_cpus, conf_interval_cpus],
+        ["Memórias RAM (MiB)", "Média", mean_rams, std_rams, conf_interval_rams]
+    ]
+
+    # Armazenar tabela do fuzzer no dicionário
+    tabelas_fuzzers[nome] = dados
+
+# Tabela com todos os fuzzers
+tabela_final = [
+    ["Fuzzer", "Tipo", "Tempo (s)", "CPUs (%)", "Memórias RAM (MiB)"],
 ]
 
-tabela = tabulate(dados, headers="firstrow", tablefmt="fancy_grid")
-print(tabela)
+for nome, dados in tabelas_fuzzers.items():
+    media_tempo = dados[1][2]
+    desvio_padrao_tempo = dados[1][3]
+    intervalo_confianca_tempo = dados[1][4]
 
+    media_cpus = dados[2][2]
+    desvio_padrao_cpus = dados[2][3]
+    intervalo_confianca_cpus = dados[2][4]
+
+    media_rams = dados[3][2]
+    desvio_padrao_rams = dados[3][3]
+    intervalo_confianca_rams = dados[3][4]
+
+    tabela_final.append([nome, "Média", media_tempo, media_cpus, media_rams])
+    tabela_final.append(["", "Desvio Padrão", desvio_padrao_tempo, desvio_padrao_cpus, desvio_padrao_rams])
+    tabela_final.append(["", "Intervalo de Confiança", intervalo_confianca_tempo, intervalo_confianca_cpus, intervalo_confianca_rams])
+
+# Imprimir tabela final
+print("\n--- Tabela de todos os fuzzers ---")
+tabela = tabulate(tabela_final, headers="firstrow", tablefmt="fancy_grid")
+print(tabela)

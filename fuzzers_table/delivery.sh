@@ -6,7 +6,7 @@ if [[ $# -lt 3 ]]; then
 fi
 
 
-time_results=()      # Time array.
+time_results=()  # Time array.
 cpu_use=()       # CPU uses array.
 ram_use=()       # RAM uses array.
 
@@ -21,14 +21,12 @@ if [[ -f results.txt ]]; then
 fi
 
 for ((i=0; i<$1; i++))
-do
-    cd $4
+do  
+    
 
     eval "$3 &"
 
     pid=$!              # Gets fuzzer process id.
-
-    cd ..
 
     ini_time=$(date +%s)
 

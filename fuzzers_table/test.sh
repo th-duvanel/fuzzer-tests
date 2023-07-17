@@ -39,6 +39,7 @@ sleep 5
 cd tls-diff-testing
 ./compile.sh
 cd ..
+#./delivery.sh 30 "tls-diff-testing" "/tls-diff-testing/tls-diff-testing/tls-diff-testing ""
 
 sleep 5
 

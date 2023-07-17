@@ -16,13 +16,13 @@ fuzzers = {
 
 }
 
-# Dicionário para armazenar as tabelas 
+# Dicionário para armazenar as tabelas
 tabelas_fuzzers = {}
 
 # Iterar sobre cada fuzzer
 for fuzzer, nome in fuzzers.items():
     print(f"--- Fuzzer: {nome} ---")
-    
+
     # Leitura
     tempo = ler_dados()
     cpus = ler_dados()
@@ -41,15 +41,6 @@ for fuzzer, nome in fuzzers.items():
     conf_interval_tmp = scipy.stats.t.interval(0.95, len(tempo) - 1, loc=mean_tmp, scale=std_tmp)
     conf_interval_cpus = scipy.stats.t.interval(0.95, len(cpus) - 1, loc=mean_cpus, scale=std_cpus)
     conf_interval_rams = scipy.stats.t.interval(0.95, len(rams) - 1, loc=mean_rams, scale=std_rams)
-
-    # Formatando os valores com duas casas decimais
-    std_tmp = round(std_tmp, 2)
-    std_cpus = round(std_cpus, 2)
-    std_rams = round(std_rams, 2)
-
-    conf_interval_tmp = [round(value, 2) for value in conf_interval_tmp]
-    conf_interval_cpus = [round(value, 2) for value in conf_interval_cpus]
-    conf_interval_rams = [round(value, 2) for value in conf_interval_rams]
 
     # Tabela do fuzzer
     dados = [

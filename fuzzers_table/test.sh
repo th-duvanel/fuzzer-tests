@@ -30,6 +30,20 @@ echo "[ IT'S SUPPOSED TO EXIST AN ERROR THAT IS IMPOSSIBLE TO FIND FUZZER'S OWN 
 
 sleep 5
 
+cd cryptofuzz
+./compile.sh
+cd ..
+echo "[ IT'S SUPPOSED TO EXIST AN ERROR - There was a linking error due to undefined references]"
+
+
+
+sleep 5
+
+cd tls-diff-testing
+./compile.sh
+cd ..
+#./delivery.sh 30 "tls-diff-testing" "/tls-diff-testing/tls-diff-testing/tls-diff-testing ""
+
 sleep 5
 
 exit 0

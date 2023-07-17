@@ -65,3 +65,5 @@ export LIBFUZZER_LINK="-fsanitize=fuzzer"
 export CXXFLAGS="$CXXFLAGS -ferror-limit=0"
 
 make
+
+echo "[ IT'S SUPPOSED TO EXIST a linking error due to undefined references '__asan_init and _''_asan_version_mismatch_check_v8']"

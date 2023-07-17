@@ -7,11 +7,10 @@ Git repo for development of a SPDM fuzzer using a TLS pre-existing one.
 This repo has two parts: the pre testing for already existing fuzzers for TLS, with the aim of finding the highest perfomance one.
 The second part is the fuzzer development itself.
 
-For the first part, there is a Dockerfile made for building an image that compares all the fuzzers automatically. You build it, run and them you receive the table with all the fuzzers.
-The script has a tshark running to record all the packets sent and received in the 4433 port locally. That's why the docker is not 100% automatic, you can access it by following the steps in the Running part.
-
 ### Fuzzers Table
 
+For the first part, there is a Dockerfile made for building an image that compares all the fuzzers automatically. You build it, run and them you receive the table with all the fuzzers.
+The script has a tshark running to record all the packets sent and received in the 4433 port locally. That's why the docker is not 100% automatic, you can access it by following the steps in the Running part.
 
 #### Requisites
 
@@ -55,11 +54,16 @@ Just run the test.sh script.
 ./test.sh
 ```
 
+### SPDM Fuzzer
+
+Soon.
+
+
 ### Specs used for testing
 
 Windows 10 22H2
 ```
-                   -`                    duvanel@duvusp
+                   -`                    duvanel@duvanel
                   .o+`                   --------------
                  `ooo/                   OS: Arch Linux on Windows 10 x86_64
                 `+oooo:                  Kernel: 5.15.90.1-microsoft-standard-WSL2
@@ -85,6 +89,7 @@ AMD RYZEN 7 5800H
 16 GB DDR4 2866 MhZ
 NVIDIA GEFORCE RTX 3060
 ```
+The docker uses Ubuntu 22:04.
 
 
 ## Authors

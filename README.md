@@ -45,12 +45,44 @@ CONTAINER ID        IMAGE        NAMES               ........         .......
 
 ### Running
 
-All the files you gonna need are in the home folder.
+All the files you gonna need are in the home folder inside your container.
 Just run the test.sh script.
 ```
 >chmod +x test.sh
 ./test.sh
 ```
+
+### Specs used for testing
+
+Windows 10 22H2
+```
+                   -`                    duvanel@duvusp
+                  .o+`                   --------------
+                 `ooo/                   OS: Arch Linux on Windows 10 x86_64
+                `+oooo:                  Kernel: 5.15.90.1-microsoft-standard-WSL2
+               `+oooooo:                 Uptime: 48 mins
+               -+oooooo+:                Packages: 273 (pacman)
+             `/:-:++oooo+:               Shell: zsh 5.9
+            `/++++/+++++++:              Terminal: Windows Terminal
+           `/++++++++++++++:             CPU: AMD Ryzen 7 5800H with Radeon Graphics (16) @ 3.193GHz
+          `/+++ooooooooooooo/`           GPU: 734e:00:00.0 Microsoft Corporation Basic Render Driver
+         ./ooosssso++osssssso+`          Memory: 1919MiB / 7618MiB
+        .oossssso-````/ossssss+`
+       -osssssso.      :ssssssso.
+      :osssssss/        osssso+++.
+     /ossssssss/        +ssssooo/-
+   `/ossssso+/:-        -:/+osssso+-
+  `+sso+:-`                 `.-/+oso:
+ `++:.                           `-/+/
+ .`                                 `/
+```
+```
+LENOVO IDEAPAD GAMING 3
+AMD RYZEN 7 5800H
+16 GB DDR4 2866 MhZ
+NVIDIA GEFORCE RTX 3060
+```
+
 
 ## Authors
 

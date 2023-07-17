@@ -54,3 +54,4 @@ dados = [
 
 tabela = tabulate(dados, headers="firstrow", tablefmt="fancy_grid")
 print(tabela)
+

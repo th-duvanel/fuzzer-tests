@@ -10,7 +10,10 @@ The second part is the fuzzer development itself.
 For the first part, there is a Dockerfile made for building an image that compares all the fuzzers automatically. You build it, run and them you receive the table with all the fuzzers.
 The script has a tshark running to record all the packets sent and received in the 4433 port locally. That's why the docker is not 100% automatic, you can access it by following the steps in the Running part.
 
-### Requisites
+### Fuzzers Table
+
+
+#### Requisites
 
 
 ```
@@ -18,7 +21,7 @@ Docker
 (you can use Windows WSL and Linux)
 ```
 
-### Installing
+#### Installing
 
 First, you need to clone the repo:
 ```
@@ -43,7 +46,7 @@ CONTAINER ID        IMAGE        NAMES               ........         .......
 >docker exec -ti <container-id> bash
 ```
 
-### Running
+#### Running
 
 All the files you gonna need are in the home folder inside your container.
 Just run the test.sh script.

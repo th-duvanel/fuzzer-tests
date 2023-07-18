@@ -20,13 +20,14 @@ fi
 echo $3
 
 for ((i=0; i<$1; i++))
-do  
+do
 
     tshark -i lo -f "tcp port 4433" -w ./tshark/$i.pcapng -F pcapng -q &
     tshark_pid=$!
     disown
 
     ini_time=$(date +%s%N)
+    ini_ram=$(top -bn 1 | grep "MiB Mem" | awk '{print $8}')
 
     eval "$3 &"
     pid=$!              # Gets fuzzer process id.
@@ -41,7 +42,7 @@ do
       # If the fuzzer is too fast for the cpu reading, it doesn't count the "zero" percent usage.
       if [[ $cpu != 100.0 ]]; then
         cpu_use+=($(awk "BEGIN { print 100 - $cpu }"))  # % usage of CPU.
-        ram_use+=($ram)
+        ram_use+=$(echo "$ram-$ini_ram" | bc -l)
       fi
 
     done
@@ -53,7 +54,7 @@ do
     ##########################TIME##################################
     end_time=$(date +%s%N)
 
-    time=$(echo "scale=4; (${end_time} - ${ini_time})/1000000000" | bc -l)
+    time=$(echo "(${end_time} - ${ini_time})/1000000000" | bc -l)
 
     time_results+=($time)
 

@@ -61,6 +61,12 @@ cd home/fuzzers/
 ```
 Just wait some time for the table.
 
+If you want to see the tshark captures, is possible to access them after running the `test.sh` inside each fuzzer folder. For example:
+```
+>cd home/fuzzers/tls-attacker/tshark
+>tshark -r 1.pcapng
+```
+
 ### SPDM Fuzzer
 
 Soon. Do not use the .py in the folder, it isn't ready yet.

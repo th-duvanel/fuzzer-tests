@@ -20,9 +20,11 @@ if [[ -f results.txt ]]; then
   rm results.txt
 fi
 
+echo $3
+
 for ((i=0; i<$1; i++))
 do  
-    
+    echo $PWD
 
     eval "$3 &"
 

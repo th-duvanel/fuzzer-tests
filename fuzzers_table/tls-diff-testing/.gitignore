@@ -1,0 +1,3 @@
+tls-diff-testing/
+*.responses
+tshark/

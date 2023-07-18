@@ -13,5 +13,5 @@ echo $CHECK_ERROR
 if [[ -z $CHECK_ERROR ]]; then
     echo "WOW! You didn't got our errors!!"
 else
-    echo "OK"
+    echo "OK, YOU DID NOT FIND CLANG. CONGRATS!! THIS IS OUR ERROR."
 fi

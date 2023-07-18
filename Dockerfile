@@ -6,6 +6,12 @@ git \
 python3-pip \
 bc \
 wget \
+make \
+gcc \
+cmake \
+libboost-all-dev \
+clang \
+tee \
 unzip
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tshark

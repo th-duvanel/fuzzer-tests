@@ -40,10 +40,13 @@ sleep 5
 cd tls-diff-testing
 ./compile.sh
 cd ..
+./delivery.sh 30 "tls-diff-testing" "for fin in \$(ls tls-diff-testing/tls-diff-testing/generator/iteration-*/stimuli.hex); do ./tls-diff-testing/tls-diff-testing/apps/stimulator/stimulator -s1 \$fin | tee \${fin}.responses; done"
 
-./delivery.sh 30 "tls-diff-testing" "for fin in $(ls tls-diff-testing/tls-diff-testing/generator/iteration-*/stimuli.hex); do
-    ./tls-diff-testing/tls-diff-testing/apps/stimulator -S5 -s20 $fin | tee ${fin}.responses
-done"
+sleep 5
+
+cd nezha
+./compile.sh
+
 
 sleep 5
 

@@ -4,17 +4,21 @@
 # Tudo de acordo com a própria página do fuzzer.
 git clone https://github.com/guidovranken/cryptofuzz.git
 
+cd cryptofuzz/
+
+python3 gen_repository.py
+
+apt-get install libc++-dev -y
+apt-get install libc++abi-dev -y
+
+pip install jsonschema
+pip install jinja2
+
 export CC=clang
 export CXX=clang++
 
-cd cryptofuzz/
-
-python gen_repository.py
-
-
 export CFLAGS="-fsanitize=address,undefined,fuzzer-no-link -O2 -g"
 export CXXFLAGS="-fsanitize=address,undefined,fuzzer-no-link -D_GLIBCXX_DEBUG -O2 -g"
-export LIBFUZZER_LINK="-fsanitize=fuzzer"
 
 # OpenSSL
 if [[ ! -d openssl ]]
@@ -28,8 +32,10 @@ then
     export CXXFLAGS="$CXXFLAGS -I $OPENSSL_INCLUDE_PATH"
 fi
 
-cd ..
-cd modules/openssl/
+cd ../modules/openssl/
+
+apt-get install libboost-all-dev -y
+
 make
 
 cd ..
@@ -53,8 +59,7 @@ then
     export CXXFLAGS="$CXXFLAGS -DCRYPTOFUZZ_MBEDTLS"
 fi
 
-cd ..
-cd modules/openssl/
+cd ../../modules/openssl/
 make
 
 cd ..
@@ -62,7 +67,7 @@ cd ..
 
 export LIBFUZZER_LINK="-fsanitize=fuzzer"
 
-export CXXFLAGS="$CXXFLAGS -ferror-limit=0"
+export CXXFLAGS="$CXXFLAGS -ferror-limit=0 -stdlib=libc++"
 
 make
 

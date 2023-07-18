@@ -24,9 +24,10 @@ rm -rf tshark
 rm -f results.txt
 cd ..
 
-cd tlsdiff
+cd tls-diff-testing
 rm -rf tls-diff-testing
 rm -rf tshark
+rm -rf *.responses
 rm -f results.txt
 cd ..
 

@@ -56,6 +56,7 @@ cd home/fuzzers/
 ```
 In the second terminal, you will run the script to test and receive the table.
 ```
+cd home/fuzzers/
 ./test.sh
 ```
 

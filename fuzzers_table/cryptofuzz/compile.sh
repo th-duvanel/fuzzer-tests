@@ -71,4 +71,4 @@ export CXXFLAGS="$CXXFLAGS -ferror-limit=0 -stdlib=libc++"
 
 make
 
-echo "[ IT'S SUPPOSED TO EXIST a linking error due to undefined references '__asan_init and _''_asan_version_mismatch_check_v8']"
+echo "[ IT'S SUPPOSED TO EXIST a linking error due to undefined references]"

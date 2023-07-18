@@ -62,7 +62,7 @@ cd home/fuzzers/
 
 ### SPDM Fuzzer
 
-Soon.
+Soon. Do not use the .py in the folder, it isn't ready yet.
 
 
 ### Specs used for testing

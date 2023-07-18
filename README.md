@@ -48,9 +48,14 @@ CONTAINER ID        IMAGE        NAMES               ........         .......
 #### Running
 
 All the files you gonna need are in the home folder inside your container.
-Just run the test.sh script.
+You have to run two terminals, like mentioned before.
+One of them will run the server.
 ```
->chmod +x test.sh
+cd home/fuzzers/
+./open_openssl_server.sh
+```
+In the second terminal, you will run the script to test and receive the table.
+```
 ./test.sh
 ```
 

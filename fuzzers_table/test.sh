@@ -39,7 +39,7 @@ cd nezha
 ./compile.sh
 cd ..
 
-sleep 5
+#sleep 5
 
 #cd cryptofuzz
 #./compile.sh

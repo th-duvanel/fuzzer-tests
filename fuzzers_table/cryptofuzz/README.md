@@ -1,0 +1,2 @@
+# Cryptofuzz failures
+Cryptofuzz is a very problematic fuzzer. It runs depending on various system variables, that are unnecessary. We tried and many errors appeared, most of them were linker to libs failures. Then, when we reached the compilation "success", the fuzzer doesn't have a port or a nice explanation on how to use properlly. Very poor documentation. Then, we've decided to not even compile it, because it doesn't worth the effort.

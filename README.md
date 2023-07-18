@@ -1,15 +1,15 @@
 # Use of existing TLS fuzzer for SPDM development
 
-Git repo for development of a SPDM fuzzer using a TLS pre-existing one. 
+Git repo for development of a SPDM fuzzer using a TLS pre-existing one.
 
 ## About
 
-This repo has two parts: the pre testing for already existing fuzzers for TLS, with the aim of finding the highest perfomance one.
+This repo has two parts: the pre testing for already existing fuzzers for TLS, with the aim of finding the one with highest perfomance
 The second part is the fuzzer development itself.
 
 ### Fuzzers Table
 
-For the first part, there is a Dockerfile made for building an image that compares all the fuzzers automatically. You build it, run and them you receive the table with all the fuzzers.
+For the first part, there is a Dockerfile made for building an image that compares all the fuzzers automatically. You build it, run and them you receive the table with the statistics related to the execution of the fuzzers testing an OpenSSL server.
 The script has a tshark running to record all the packets sent and received in the 4433 port locally. That's why the docker is not 100% automatic, you can access it by following the steps in the Running part.
 
 #### Requisites

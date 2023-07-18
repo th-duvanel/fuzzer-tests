@@ -16,38 +16,27 @@ if [[ ! -d tshark ]]; then
   mkdir tshark
 fi
 
-if [[ -f results.txt ]]; then
-  rm results.txt
-fi
 
 echo $3
 
 for ((i=0; i<$1; i++))
 do  
-    echo $PWD
-
-    eval "$3 &"
-
-    pid=$!              # Gets fuzzer process id.
-
-    ini_time=$(date +%s)
 
     tshark -i lo -f "tcp port 4433" -w ./tshark/$i.pcapng -F pcapng -q &
-
     tshark_pid=$!
     disown
 
-    ini_time=$(date +%s)
+    ini_time=$(date +%s%N)
+
+    eval "$3 &"
+    pid=$!              # Gets fuzzer process id.
 
     # While process is alive.
     while kill -0 $pid 2>/dev/null
     do
-      #echo $(top -bn 1 -p $pid | awk '{if ($1 == '$pid') print $10}')
       ram=$(top -bn 1 | grep "MiB Mem" | awk '{print $8}')
 
-      #echo $(top -bn 1 | grep %Cpu\(s\) | cut -d ',' -f 4 | awk '{ gsub("[^0-9.]",""); print }')
       cpu=$(top -bn 1 | grep %Cpu\(s\) | cut -d ',' -f 4 | awk '{ gsub("[^0-9.]",""); print }')
-
 
       # If the fuzzer is too fast for the cpu reading, it doesn't count the "zero" percent usage.
       if [[ $cpu != 100.0 ]]; then
@@ -62,16 +51,15 @@ do
 
 
     ##########################TIME##################################
-    end_time=$(date +%s)
+    end_time=$(date +%s%N)
 
-    time=$(echo "scale=4; (${end_time} - ${ini_time})/1000" | bc -l)
-    
-    #echo "$i iteration duration: $time s"
+    time=$(echo "scale=4; (${end_time} - ${ini_time})/1000000000" | bc -l)
 
     time_results+=($time)
 
 done
 
+cd ..
 
 # Time for each iteraction
 for print in "${time_results[@]}"
@@ -97,9 +85,6 @@ done
 
 echo >> results.txt
 
-
-cd ..
-eval "python3 statistics.py < $2/results.txt"
 
 
 

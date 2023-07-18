@@ -1,8 +1,5 @@
 #!/bin/bash
 
-chmod +x open_openssl_server.sh
-./open_openssl_server.sh
-
 # TLS-Attacker
 cd tls-attacker
 chmod +x compile.sh
@@ -23,17 +20,11 @@ sleep 5
 cd tlsbunny
 chmod +x compile.sh
 ./compile.sh
-cd ..
-./delivery.sh 1 "tlsbunny" "java -cp tlsbunny/target/tlsbunny-1.0-SNAPSHOT-all.jar \
-    com.gypsyengineer.tlsbunny.tls13.client.fuzzer.DeepHandshakeFuzzyClient"
+java -cp target/tlsbunny-1.0-SNAPSHOT-all.jar \
+    com.gypsyengineer.tlsbunny.tls13.client.fuzzer.DeepHandshakeFuzzyClient
 echo "[ IT'S SUPPOSED TO EXIST AN ERROR THAT IS IMPOSSIBLE TO FIND FUZZER'S OWN JAVA CLASS. ]"
 
-sleep 5
-
-cd cryptofuzz
-./compile.sh
 cd ..
-echo "[ IT'S SUPPOSED TO EXIST AN ERROR - There was a linking error due to undefined references]"
 
 sleep 5
 
@@ -46,8 +37,18 @@ sleep 5
 
 cd nezha
 ./compile.sh
-
+cd ..
 
 sleep 5
+
+#cd cryptofuzz
+#./compile.sh
+#cd ..
+#echo "[ IT'S SUPPOSED TO EXIST AN ERROR - There was a linking error due to undefined references]"
+
+sleep 5
+
+
+python3 statistics.py < results.txt
 
 exit 0

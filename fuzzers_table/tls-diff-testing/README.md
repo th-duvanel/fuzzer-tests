@@ -1,6 +1,6 @@
 # TLS-Diff Fuzzer: README
 
-This repository contains the TLS-Diff fuzzer, which is primarily focused on testing servers using the openssl library. While the fuzzer is designed to test multiple server implementations like mbedtls, wolfssl, matrixssl, and boringssl, for this project, we have standardized our testing exclusively on openssl servers. This allows us to compare the performance and effectiveness of the fuzzer across different server implementations consistently.
+This repository contains the TLS-Diff fuzzer (https://github.com/hso-esk/tls-diff-testing.git) , which is primarily focused on testing servers using the openssl library. While the fuzzer is designed to test multiple server implementations like mbedtls, wolfssl, matrixssl, and boringssl, for this project, we have standardized our testing exclusively on openssl servers. This allows us to compare the performance and effectiveness of the fuzzer across different server implementations consistently.
 
 To use the TLS-Diff fuzzer with openssl, you will find two essential files in this repository: `generate_multi.sh` and `stimulator.cpp`. These files are intended to replace their counterparts in the original repository.
 

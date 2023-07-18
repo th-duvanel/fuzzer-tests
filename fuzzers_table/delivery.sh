@@ -42,7 +42,7 @@ do
       # If the fuzzer is too fast for the cpu reading, it doesn't count the "zero" percent usage.
       if [[ $cpu != 100.0 ]]; then
         cpu_use+=($(awk "BEGIN { print 100 - $cpu }"))  # % usage of CPU.
-        ram_use+=$(echo "$ram-$ini_ram" | bc -l)
+        ram_use+=($(echo "${ram}-${ini_ram}" | bc -l))
       fi
 
     done

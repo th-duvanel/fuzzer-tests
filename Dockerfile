@@ -11,7 +11,7 @@ gcc \
 cmake \
 libboost-all-dev \
 clang \
-tee \
+g++ \
 unzip
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tshark

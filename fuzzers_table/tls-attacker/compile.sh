@@ -8,7 +8,7 @@ fi
 
 echo "[ CLONING FUZZER REPO!!!! ]"
 git clone https://github.com/tls-attacker/TLS-Attacker.git
-
+git revert --no-commit 9dfb02e7b1e2861b9973c5af86c5529c2f657c8d HEAD
 cd TLS-Attacker
 
 

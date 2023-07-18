@@ -1,6 +1,9 @@
 #!/bin/bash
 
 git clone https://github.com/hso-esk/tls-diff-testing.git
+git revert --no-commit 40f31a82121c9d8420e634228ce303e4200bcc24 HEAD
+
+
 
 apt-get install libcrypto++-dev libcrypto++-doc libcrypto++-utils screen -y
 

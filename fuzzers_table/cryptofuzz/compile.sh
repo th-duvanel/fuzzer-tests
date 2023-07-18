@@ -3,7 +3,7 @@
 # Script para compilação do fuzzer cryptofuzz. Inclui dependências e exports.
 # Tudo de acordo com a própria página do fuzzer.
 git clone https://github.com/guidovranken/cryptofuzz.git
-
+git revert --no-commit 9008c12e70028d0d56cb4870c1516873137311e4 HEAD
 cd cryptofuzz/
 
 python3 gen_repository.py

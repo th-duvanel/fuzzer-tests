@@ -1,6 +1,7 @@
 #!/bin/bash
 
 git clone https://github.com/artem-smotrakov/tlsbunny.git
+git revert --no-commit 27f8509403ac0f4767a869812d99688521e01fc1 HEAD
 
 cd tlsbunny
 

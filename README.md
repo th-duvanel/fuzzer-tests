@@ -7,6 +7,8 @@ Git repo for development of a SPDM fuzzer using a TLS pre-existing one.
 This repo has two parts: the pre testing for already existing fuzzers for TLS, with the aim of finding the one with highest perfomance.
 The second part is the fuzzer development itself.
 
+This branch is made for WTICG SBSeg 2023. Last change in 18th of July, 2023.
+
 ### Fuzzers Table
 
 For the first part, there is a Dockerfile made for building an image that compares all the fuzzers automatically. You build it, run and them you receive the table with the statistics related to the execution of the fuzzers testing an OpenSSL server.
@@ -60,6 +62,12 @@ cd home/fuzzers/
 ./test.sh
 ```
 Just wait some time for the table.
+
+If you want to see the tshark captures, is possible to access them after running the `test.sh` inside each fuzzer folder. For example:
+```
+>cd home/fuzzers/tls-attacker/tshark
+>tshark -r 1.pcapng
+```
 
 ### SPDM Fuzzer
 
